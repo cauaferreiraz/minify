@@ -4,11 +4,6 @@ import com.minify.structures.ListaDuplamenteEncadeada;
 
 import java.util.Objects;
 
-/**
- * Representa uma playlist no sistema Minify.
- * Utiliza internamente uma LISTA DUPLAMENTE ENCADEADA para gerenciar suas músicas,
- * permitindo inserções, remoções e navegação flexível.
- */
 public class Playlist {
     private long id;
     private String nome;

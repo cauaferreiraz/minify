@@ -4,17 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * Árvore Binária de Busca (BST - Binary Search Tree).
- * Utilizada para gerenciar a Biblioteca de Músicas com busca rápida O(log n).
- *
- * Propriedades:
- * - Subárvore esquerda contém apenas elementos menores que a raiz.
- * - Subárvore direita contém apenas elementos maiores que a raiz.
- */
 public class ArvoreBinariaBusca<T extends Comparable<? super T>> {
 
-    // Nó interno da árvore
     private static final class No<T> {
         private T valor;
         private No<T> esquerda;
@@ -28,9 +19,6 @@ public class ArvoreBinariaBusca<T extends Comparable<? super T>> {
     private No<T> raiz;
     private int tamanho;
 
-    /**
-     * Insere um novo elemento na árvore de forma ordenada.
-     */
     public boolean inserir(T valor) {
         if (valor == null) {
             throw new NullPointerException("valor não pode ser nulo");
@@ -45,7 +33,6 @@ public class ArvoreBinariaBusca<T extends Comparable<? super T>> {
         while (true) {
             int comparacao = valor.compareTo(atual.valor);
             if (comparacao == 0) {
-                // Elemento duplicado (mesmo ID) não é permitido
                 return false;
             }
             if (comparacao < 0) {
@@ -66,9 +53,6 @@ public class ArvoreBinariaBusca<T extends Comparable<? super T>> {
         }
     }
 
-    /**
-     * Busca um elemento na árvore com complexidade média O(log n).
-     */
     public Optional<T> buscar(T valor) {
         if (valor == null) {
             return Optional.empty();
@@ -84,9 +68,6 @@ public class ArvoreBinariaBusca<T extends Comparable<? super T>> {
         return Optional.empty();
     }
 
-    /**
-     * Remove um elemento da árvore binária mantendo suas propriedades.
-     */
     public boolean remover(T valor) {
         if (valor == null || raiz == null) {
             return false;
@@ -107,14 +88,11 @@ public class ArvoreBinariaBusca<T extends Comparable<? super T>> {
         } else if (comparacao > 0) {
             atual.direita = removerRecursivo(atual.direita, valor);
         } else {
-            // Encontrou o nó a ser removido
             tamanho--;
 
-            // Caso 1: Nó folha (sem filhos)
             if (atual.esquerda == null && atual.direita == null) {
                 return null;
             }
-            // Caso 2: Apenas um filho (à direita ou à esquerda)
             if (atual.esquerda == null) {
                 return atual.direita;
             }
@@ -122,13 +100,10 @@ public class ArvoreBinariaBusca<T extends Comparable<? super T>> {
                 return atual.esquerda;
             }
 
-            // Caso 3: Nó com dois filhos
-            // Substitui pelo menor valor da subárvore direita (sucessor em ordem)
             T menorValor = encontrarMenorValor(atual.direita);
             atual.valor = menorValor;
-            // Remove o nó duplicado na subárvore direita
             atual.direita = removerRecursivo(atual.direita, menorValor);
-            tamanho++; // Compensa o decremento pois a chamada recursiva acima já decrementa
+            tamanho++;
         }
         return atual;
     }
@@ -137,10 +112,6 @@ public class ArvoreBinariaBusca<T extends Comparable<? super T>> {
         return no.esquerda == null ? no.valor : encontrarMenorValor(no.esquerda);
     }
 
-    /**
-     * Percurso Em-Ordem (In-Order: Esquerda -> Raiz -> Direita).
-     * Retorna os elementos em ordem crescente (no caso de músicas, por ID).
-     */
     public List<T> listarEmOrdem() {
         List<T> lista = new ArrayList<>();
         percursoEmOrdem(raiz, lista);

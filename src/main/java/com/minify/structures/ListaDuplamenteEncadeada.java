@@ -4,15 +4,8 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
-/**
- * Lista Duplamente Encadeada.
- * Utilizada para gerenciar as Playlists de músicas.
- * Cada nó possui ponteiros para o elemento 'anterior' e 'proximo',
- * permitindo navegação bidirecional e fácil remoção/inserção.
- */
 public class ListaDuplamenteEncadeada<T> implements Iterable<T> {
 
-    // Nó interno com ponteiro para o anterior e próximo
     private static final class No<T> {
         private final T valor;
         private No<T> anterior;
@@ -27,9 +20,6 @@ public class ListaDuplamenteEncadeada<T> implements Iterable<T> {
     private No<T> ultimo;
     private int tamanho;
 
-    /**
-     * Adiciona um elemento ao final da lista.
-     */
     public void adicionar(T valor) {
         No<T> novo = new No<>(valor);
         if (ultimo == null) {
@@ -42,25 +32,16 @@ public class ListaDuplamenteEncadeada<T> implements Iterable<T> {
         tamanho++;
     }
 
-    /**
-     * Retorna o elemento na posição informada.
-     */
     public T obter(int indice) {
         return noNoIndice(indice).valor;
     }
 
-    /**
-     * Remove o elemento no índice informado.
-     */
     public T remover(int indice) {
         No<T> no = noNoIndice(indice);
         desvincular(no);
         return no.valor;
     }
 
-    /**
-     * Remove a primeira ocorrência do valor informado.
-     */
     public boolean remover(T valor) {
         No<T> atual = primeiro;
         while (atual != null) {
@@ -73,9 +54,6 @@ public class ListaDuplamenteEncadeada<T> implements Iterable<T> {
         return false;
     }
 
-    /**
-     * Desvincula um nó reorganizando os ponteiros dos nós vizinhos.
-     */
     private void desvincular(No<T> no) {
         if (no.anterior == null) {
             primeiro = no.proximo;
@@ -98,10 +76,6 @@ public class ListaDuplamenteEncadeada<T> implements Iterable<T> {
         return tamanho == 0;
     }
 
-    /**
-     * Otimização: se o índice estiver na primeira metade, busca do início;
-     * senão, busca do fim para trás.
-     */
     private No<T> noNoIndice(int indice) {
         if (indice < 0 || indice >= tamanho) {
             throw new IndexOutOfBoundsException("Índice: " + indice + ", tamanho: " + tamanho);

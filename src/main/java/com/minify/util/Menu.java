@@ -11,13 +11,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
-/**
- * Interface interativa via console do sistema Minify.
- * Demonstra a integração entre as 3 estruturas de dados:
- * - Árvore Binária de Busca (Biblioteca)
- * - Lista Duplamente Encadeada (Playlists)
- * - Fila FIFO (Reprodução)
- */
 public class Menu {
     private final BibliotecaService biblioteca = new BibliotecaService();
     private final PlaylistService playlistsService = new PlaylistService();
@@ -38,24 +31,17 @@ public class Menu {
                 System.out.println();
 
                 switch (opcao) {
-                    // Árvore Binária de Busca (Biblioteca)
                     case "1" -> cadastrarMusica(scanner);
                     case "2" -> listarMusicas();
                     case "3" -> buscarMusica(scanner);
                     case "4" -> removerMusicaDaBiblioteca(scanner);
-
-                    // Lista Duplamente Encadeada (Playlists)
                     case "5" -> criarPlaylist(scanner);
                     case "6" -> listarPlaylists();
                     case "7" -> adicionarMusicaAPlaylist(scanner);
                     case "8" -> removerMusicaDaPlaylist(scanner);
-
-                    // Fila (Player de Reprodução)
                     case "9" -> adicionarMusicaAFila(scanner);
                     case "10" -> verFilaDeReproducao();
                     case "11" -> tocarProxima();
-
-                    // Auxiliar
                     case "12" -> carregarDadosDeExemplo();
                     case "0" -> executando = false;
                     default -> System.out.println("Opção inválida. Tente novamente.");
@@ -92,10 +78,6 @@ public class Menu {
         System.out.println("  0. Sair");
         System.out.println("=========================================");
     }
-
-    // ==========================================
-    // MÉTODOS DA BIBLIOTECA (Árvore Binária)
-    // ==========================================
 
     private void cadastrarMusica(Scanner scanner) {
         Long id = lerLong(scanner, "ID da música (número): ");
@@ -157,10 +139,6 @@ public class Menu {
             System.out.println(">> Música não encontrada para remoção.");
         }
     }
-
-    // ==========================================
-    // MÉTODOS DE PLAYLIST (Lista Duplamente Encadeada)
-    // ==========================================
 
     private void criarPlaylist(Scanner scanner) {
         Long id = lerLong(scanner, "ID da playlist: ");
@@ -241,10 +219,6 @@ public class Menu {
         }
     }
 
-    // ==========================================
-    // MÉTODOS DO PLAYER (Fila FIFO)
-    // ==========================================
-
     private void adicionarMusicaAFila(Scanner scanner) {
         Long id = lerLong(scanner, "ID da música para enfileirar: ");
         if (id == null) return;
@@ -283,10 +257,6 @@ public class Menu {
         }
     }
 
-    // ==========================================
-    // UTILITÁRIO: DADOS DE TESTE
-    // ==========================================
-
     private void carregarDadosDeExemplo() {
         biblioteca.adicionarMusica(new Musica(10, "Bohemian Rhapsody", "Queen", "A Night at the Opera", 354));
         biblioteca.adicionarMusica(new Musica(5, "Billie Jean", "Michael Jackson", "Thriller", 294));
@@ -304,10 +274,6 @@ public class Menu {
         System.out.println(">> 1 playlist 'Clássicos do Rock' criada com 3 músicas.");
         System.out.println(">> Dica: Liste as músicas (opção 2) para ver que a árvore as ordenou automaticamente por ID!");
     }
-
-    // ==========================================
-    // MÉTODOS AUXILIARES DE LEITURA
-    // ==========================================
 
     private Playlist buscarPlaylist(long id) {
         for (Playlist playlist : playlists) {
